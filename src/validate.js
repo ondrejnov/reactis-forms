@@ -563,6 +563,10 @@ v.extend(validate, {
 });
 
 validate.validators = {
+	// skip async, validuje se ve FormManageru bokem
+	async: function (value, options) {
+	},
+
 	// Presence validates that the value isn't empty
 	presence: function (value, options) {
 		options = v.extend({}, this.options, options);

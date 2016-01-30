@@ -10,6 +10,7 @@ export default class FormManager {
 		this.normalizeSchema(schema);
 		this.schema = schema;
 		this.values = immutable.Map();
+		this.async = immutable.Map();
 		this.errors = immutable.Map();
 		this.touched = immutable.Map();
 		this.eventEmitter = new EventEmitter();
@@ -87,6 +88,10 @@ export default class FormManager {
 		this.errors = errors;
 	}
 
+	setAsync(status) {
+		this.async = status;
+	}
+
 	getValues() {
 		return this.values;
 	}
@@ -142,12 +147,18 @@ export default class FormManager {
 	getControlProps(def) {
 		let props = this.createProps(def);
 		props.value = this.values ? this.values.get(def.key) : null;
-		if (1) { // is not null
 
-		}
 		const error = this.errors ? this.errors[def.key] : null;
 		if (this.touched.get(def.key)) {
 			props.error = error;
+		}
+
+		const async = this.async ? this.async.get(def.key) : null;
+		if (async) {
+			props.asyncValidatePending = async.get('pending');
+			if (!props.asyncValidatePending) {
+				props.error = async.get('error');
+			}
 		}
 		props.touched = this.touched.get(def.key) ? this.touched.get(def.key) : immutable.Map();
 		return props;
@@ -203,6 +214,30 @@ export default class FormManager {
 			}
 		});
 		return rules;
+	}
+
+	getAsyncError(key) {
+		const constraints = this.getRules(this.schema);
+		const async = constraints[key] && constraints[key].async;
+		if (!async) {
+			return false;
+		}
+
+		return new Promise((fulfill, reject) => {
+			async.promise(this.values.get(key))
+				.then((result) => {
+					if (result === true) {
+						fulfill();
+					}
+					else if (result === false) {
+						reject(async.message);
+					}
+					else {
+						reject(result);
+					}
+				})
+				.catch();
+		});
 	}
 
 	getErrors(state) {

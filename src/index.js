@@ -11,9 +11,9 @@ export Select from './Select';
 export Checkbox from './Checkbox';
 
 module.exports.actions = {
-	load: require('./reducer').load,
-	save: require('./reducer').save,
-	remove: require('./reducer').remove,
-	archive: require('./reducer').archive,
-	active: require('./reducer').active
+	load: require('./actions').load,
+	save: require('./actions').save,
+	remove: require('./actions').remove,
+	archive: require('./actions').archive,
+	active: require('./actions').active
 };

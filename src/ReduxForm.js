@@ -4,7 +4,7 @@ import Component from './Component';
 import immutable from 'immutable';
 
 import {connect} from 'react-redux';
-import * as actions from './reducer';
+import * as actions from './actions';
 import {bindActionCreators} from 'redux';
 
 @connect(
@@ -32,9 +32,9 @@ export default class ReduxForm extends Component {
 
 	handleChange(key, value, values, form) {
 		this.props.actions.setValue(this.props.id, values);
+		this.processFormErrors(form, key);
 
-		const errors = form.getErrors();
-		this.props.actions.setErrors(this.props.id, errors);
+		this.props.actions.setAsyncResult(this.props.id, key, null);
 
 		if (this.props.onChange) {
 			this.props.onChange(key, value, values)
@@ -43,13 +43,26 @@ export default class ReduxForm extends Component {
 
 	handleBlur(key, value, values, form) {
 		this.props.actions.setTouched(this.props.id, values);
+		this.processFormErrors(form, key);
 
-		const errors = form.getErrors();
-		this.props.actions.setErrors(this.props.id, errors);
+		const asyncError = form.getAsyncError(key);
+		if (asyncError) {
+			this.props.actions.startAsyncValidate(this.props.id, key);
+			asyncError.then(() => {
+				this.props.actions.setAsyncResult(this.props.id, key, null);
+			}).catch((message) => {
+				this.props.actions.setAsyncResult(this.props.id, key, message);
+			});
+		}
 
 		if (this.props.onBlur) {
 			this.props.onBlur(key, value, values)
 		}
+	}
+
+	processFormErrors(form, key) {
+		const errors = form.getErrors();
+		this.props.actions.setErrors(this.props.id, errors);
 	}
 
 	validate() {

@@ -54,6 +54,12 @@ export default class Form extends Component {
 		else {
 			this.form.setErrors(immutable.Map());
 		}
+		if (state.get('async')) {
+			this.form.setAsync(state.get('async'));
+		}
+		else {
+			this.form.setAsync(immutable.Map());
+		}
 	}
 
 	handleSubmit(e) {
