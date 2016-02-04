@@ -7,6 +7,10 @@ export default class Checkbox extends Component {
 		if (this.props.onChange) {
 			this.props.onChange(e.target.checked)
 		}
+		this.handleBlur(e)
+	}
+
+	handleBlur(e) {
 		if (this.props.onBlur) {
 			this.props.onBlur(e.target.checked)
 		}
@@ -14,7 +18,11 @@ export default class Checkbox extends Component {
 
 	render() {
 		return (
-			<input type="checkbox" {...this.props} checked={this.props.value} onChange={(e) => this.handleChange(e)} />
+			<input type="checkbox" {...this.props}
+				   checked={this.props.value}
+				   onBlur={(e) => this.handleBlur(e)}
+				   onChange={(e) => this.handleChange(e)}
+			/>
 		)
 	}
 }
