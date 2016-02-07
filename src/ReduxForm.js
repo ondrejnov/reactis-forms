@@ -78,6 +78,9 @@ export default class ReduxForm extends Component {
 			this.props.actions.setTouched(this.props.id, immutable.Map(touched));
 			this.props.actions.setErrors(this.props.id, errors);
 		}
+		else {
+			this.props.actions.setErrors(this.props.id, immutable.Map());
+		}
 		return errors;
 	}
 
