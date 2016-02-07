@@ -34,7 +34,10 @@ export default class ReduxForm extends Component {
 		this.props.actions.setValue(this.props.id, values);
 		this.processFormErrors(form, key);
 
-		this.props.actions.setAsyncResult(this.props.id, key, null);
+		const asyncError = form.getAsyncError(key);
+		if (asyncError) {
+			this.props.actions.setAsyncResult(this.props.id, key, null);
+		}
 
 		if (this.props.onChange) {
 			this.props.onChange(key, value, values)
