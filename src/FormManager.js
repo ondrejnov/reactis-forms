@@ -13,6 +13,7 @@ export default class FormManager {
 		this.async = immutable.Map();
 		this.errors = immutable.Map();
 		this.touched = immutable.Map();
+		this.beforeChange = null;
 		this.eventEmitter = new EventEmitter();
 		this.initValues = this.createDefaultValues();
 		this._props = {};
@@ -115,6 +116,9 @@ export default class FormManager {
 			this.values = immutable.Map();
 		}
 		this.values = this.values.set(key, value);
+		if (this.beforeChange) {
+			this.values = this.beforeChange(key, value, this.values);
+		}
 		this.eventEmitter.emit('change', key, value, this.values);
 	}
 
