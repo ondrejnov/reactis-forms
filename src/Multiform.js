@@ -121,6 +121,7 @@ export default class Multiform extends React.Component {
 								schema={this.props.schema}
 								class={this.props.subform}
 								state={subformState}
+								beforeChange={this.props.beforeChange}
 								onChange={this.handleChange.bind(this, value)}
 								onRemove={this.handleRemove.bind(this, value)}
 					/>;

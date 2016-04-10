@@ -7,12 +7,13 @@ export default class Form extends Component {
 
 	constructor(props) {
 		super(props);
-		if (this.props.schema) {
+		if (props.schema) {
 			this.form = new FormManager(props.schema);
 		}
 		else {
 			this.form = props.form;
 		}
+		this.form.beforeChange = props.beforeChange;
 		this.form.on('change', this.handleChange, this);
 		this.form.on('blur', this.handleBlur, this);
 		if (props.state) {
