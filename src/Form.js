@@ -82,10 +82,20 @@ export default class Form extends Component {
 	}
 
 	render() {
-		return (
-			<form className={this.props.className} onSubmit={(e) => this.handleSubmit(e)}>
-				{this.props.children}
-			</form>
-		)
+		if (this.props.nested) {
+			return (
+				<div className={this.props.className}>
+					{this.props.children}
+				</div>
+			)
+		}
+		else {
+			return (
+				<form className={this.props.className} onSubmit={(e) => this.handleSubmit(e)}>
+					{this.props.children}
+				</form>
+			)
+		}
+
 	}
 }

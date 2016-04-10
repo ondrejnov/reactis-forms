@@ -93,6 +93,7 @@ export default class ReduxForm extends Component {
 				  schema={this.props.schema}
 				  form={this.props.form}
 				  className={this.props.className}
+				  nested={this.props.nested}
 				  ref="form">
 
 				{this.props.children}
