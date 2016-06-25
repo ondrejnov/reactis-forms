@@ -7,7 +7,8 @@ export default class Multiform extends React.Component {
 
 	static defaultProps = {
 		showHeader: true,
-		addLabel: 'přidat'
+		addLabel: 'přidat',
+		className: 'multiform'
 	};
 
 	handleAddSubform(e) {
@@ -129,8 +130,8 @@ export default class Multiform extends React.Component {
 
 		return (
 			<div>
-				<table className="multiform">
-					{header && <thead><tr>{header}</tr></thead>}
+				<table className={this.props.className}>
+					{header && <thead><tr>{header}<td></td></tr></thead>}
 					<tbody>
 						{subforms}
 					</tbody>
