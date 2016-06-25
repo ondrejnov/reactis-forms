@@ -9,23 +9,16 @@ export default class Select extends Component {
 			val = undefined;
 		}
 		if (this.props.onChange) {
-			this.props.onChange(val)
+			this.props.onChange(val ? val.id : val)
 		}
 		if (this.props.onBlur) {
-			this.props.onBlur(val)
+			this.props.onBlur(val ? val.id : val)
 		}
 	}
 
 
 	render() {
 		let options = this.props.options;
-		/*if (this.props.placeholder) {
-			options = [{id: '', title: this.props.placeholder}];
-			this.props.options.forEach(item => options.push(item));
-		}
-		options = options.map(function(op) {
-			return <option key={op.id} value={op.id}>{op.title}</option>;
-		});*/
 
 		return (
 			<ReactSelect {...this.props}
