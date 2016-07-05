@@ -80,6 +80,10 @@ export const REMOVE = 'forms/REMOVE';
 export const REMOVE_SUCCESS = 'forms/REMOVE_SUCCESS';
 export const REMOVE_FAIL = 'forms/REMOVE_FAIL';
 
+export const DEFAULTS = 'forms/DEFAULTS';
+export const DEFAULTS_SUCCESS = 'forms/DEFAULTS_SUCCESS';
+export const DEFAULTS_FAIL = 'forms/DEFAULTS_FAIL';
+
 export const ARCHIVE = 'forms/ARCHIVE';
 export const ARCHIVE_SUCCESS = 'forms/ARCHIVE_SUCCESS';
 export const ARCHIVE_FAIL = 'forms/ARCHIVE_FAIL';
@@ -92,6 +96,14 @@ export const ACTIVE_FAIL = 'forms/ACTIVE_FAIL';
 export function load(id, api, query) {
 	return {
 		types: [LOAD, LOAD_SUCCESS, LOAD_FAIL],
+		id,
+		promise: (client) => client.call(api, query)
+	};
+}
+
+export function getDefaults(id, api, query) {
+	return {
+		types: [DEFAULTS, DEFAULTS_SUCCESS, DEFAULTS_FAIL],
 		id,
 		promise: (client) => client.call(api, query)
 	};

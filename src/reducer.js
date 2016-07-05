@@ -2,6 +2,7 @@ import immutable from 'immutable';
 import {CHANGE, BLUR,
 	SET_VALUE, SET_TOUCHED, SET_ERRORS, START_ASYNC_VALIDATE, SET_ASYNC_RESULT,
 	LOAD, LOAD_SUCCESS, LOAD_FAIL,
+	DEFAULTS, DEFAULTS_SUCCESS, DEFAULTS_FAIL,
 	SAVE, SAVE_SUCCESS, SAVE_FAIL,
 	REMOVE, REMOVE_SUCCESS, REMOVE_FAIL,
 	ARCHIVE, ARCHIVE_SUCCESS, ARCHIVE_FAIL,
@@ -51,6 +52,11 @@ export default function reducer(state = initialState, action = {}) {
 			  	.setIn([action.id, 'pending'], true)
 			  	.setIn([action.id, 'saving'], true);
 
+	  case DEFAULTS:
+		  return state
+			  .setIn([action.id, 'pending'], true)
+			  .setIn([action.id, 'saving'], true);
+
 	  case LOAD_SUCCESS:
 		  return state
 			  .setIn([action.id, 'pending'], false)
@@ -64,7 +70,14 @@ export default function reducer(state = initialState, action = {}) {
 			  .setIn([action.id, 'saving'], false)
 			  .setIn([action.id, 'values'], immutable.fromJS(action.result));
 
-
+	  case DEFAULTS_SUCCESS:
+		  state = state
+			  .setIn([action.id, 'pending'], false)
+			  .setIn([action.id, 'saving'], false);
+		  Object.keys(action.result).forEach((key) => {
+			 state = state.setIn([action.id, 'values', key], immutable.fromJS(action.result[key]));
+		  });
+		  return state;
 
 	  case SAVE_FAIL:
 		  var state = state
@@ -76,6 +89,11 @@ export default function reducer(state = initialState, action = {}) {
 		  return state;
 
 	  case LOAD_FAIL:
+		  return state
+			  .setIn([action.id, 'pending'], false)
+			  .setIn([action.id, 'loading'], false);
+
+	  case DEFAULTS_FAIL:
 		  return state
 			  .setIn([action.id, 'pending'], false)
 			  .setIn([action.id, 'loading'], false);

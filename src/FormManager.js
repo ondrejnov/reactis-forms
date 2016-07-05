@@ -93,7 +93,14 @@ export default class FormManager {
 		this.async = status;
 	}
 
-	getValues() {
+	getValues(strict = false) {
+		if (strict) {
+			let values = immutable.Map();
+			Object.keys(this.schema).forEach(key => {
+				values = values.set(key, this.values.get(key));
+			});
+			return values;
+		}
 		return this.values;
 	}
 

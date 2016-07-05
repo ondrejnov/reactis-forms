@@ -31,6 +31,13 @@ export default class Form extends Component {
 		};
 	}
 
+	componentDidMount() {
+		const values = this.form.getValues(true);
+		if (this.props.onInit) {
+			this.props.onInit(values, this.form)
+		}
+	}
+
 	componentWillReceiveProps(nextProps) {
 		if (nextProps.state) {
 			this.syncForm(nextProps.state);

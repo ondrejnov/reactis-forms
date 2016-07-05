@@ -18,6 +18,10 @@ import {bindActionCreators} from 'redux';
 	},null, { withRef: true })
 export default class ReduxForm extends Component {
 
+	handleInit(values, form) {
+		this.props.actions.setValue(this.props.id, values);
+	}
+
 	handleSubmit(form) {
 
 		const errors = this.validate();
@@ -88,6 +92,7 @@ export default class ReduxForm extends Component {
 		return (
 			<Form state={this.props.state}
 				  onSubmit={(form) => this.handleSubmit(form)}
+				  onInit={(values, form) => this.handleInit(values, form)}
 				  onChange={(key, value, values, form) => this.handleChange(key, value, values, form)}
 				  onBlur={(key, value, values, form) => this.handleBlur(key, value, values, form)}
 				  schema={this.props.schema}
