@@ -227,15 +227,18 @@ export default class FormManager {
 		return rules;
 	}
 
-	getAsyncError(key) {
+	getAsyncError(key, onlyCheck = false) {
 		const constraints = this.getRules(this.schema);
 		const async = constraints[key] && constraints[key].async;
 		if (!async) {
 			return false;
 		}
+		if (onlyCheck) {
+			return true;
+		}
 
 		return new Promise((fulfill, reject) => {
-			async.promise(this.values.get(key))
+			async.promise(this.values.get(key), this.values)
 				.then((result) => {
 					if (result === true) {
 						fulfill();
