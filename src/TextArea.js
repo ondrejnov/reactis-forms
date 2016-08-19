@@ -16,10 +16,29 @@ export default class Textarea extends Component {
 	}
 
 	render() {
+		const props = {
+			autoFocus: this.props.autoFocus,
+			className: this.props.className,
+			disabled: this.props.disabled,
+			maxLength: this.props.maxLength,
+			minLength: this.props.minLength,
+			name: this.props.name,
+			placeholder: this.props.placeholder,
+			readOnly: this.props.readOnly,
+			required: this.props.required,
+			size: this.props.size,
+			start: this.props.start,
+			step: this.props.step,
+			style: this.props.style,
+			tabIndex: this.props.tabIndex,
+			title: this.props.title,
+			type: this.props.type
+		};
+
 		return (
 			<div>
 				<textarea
-					{...this.props}
+					{...props}
 					value={this.props.value ? this.props.value : ''}
 					onChange={(e) => this.handleChange(e)}
 					onBlur={(e) => this.handleBlur(e)}
