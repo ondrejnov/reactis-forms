@@ -1,4 +1,5 @@
 import React from 'react';
+import shallowEqual from 'react-pure-render/shallowEqual';
 
 export default class FormRow extends React.Component {
 
@@ -22,12 +23,17 @@ export default class FormRow extends React.Component {
 
 		const control = this.getControl();
 
-		/*const shouldUpdate =
-			this.props.visible != nextProps.visible ||
-			control.props.value != nextProps.input.props.value ||
-			control.props.error != nextProps.input.props.error;*/
+		let shouldUpdate =
+			 this.props.visible != nextProps.visible ||
+			 this.props.required != nextProps.required ||
+			 this.props.label != nextProps.label ||
+			 this.props.labelWidth != nextProps.labelWidth;
+		if (!shouldUpdate && this.lastControl) {
+			shouldUpdate = !shallowEqual(control.props, this.lastControl.props);
+		}
 
-		const shouldUpdate = true;
+		this.lastControl = control;
+		//const shouldUpdate = true;
 		return shouldUpdate;
 	}
 
