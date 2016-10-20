@@ -874,6 +874,9 @@ validate.validators = {
 		if (!comparator(value, otherValue, options, attribute, attributes)) {
 			return v.format(message, {attribute: v.prettify(options.attribute)});
 		}
+	},
+	function: function (value, options, attribute, attributes) {
+		return options;
 	}
 };
 

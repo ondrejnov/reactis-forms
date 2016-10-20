@@ -5,6 +5,10 @@ import immutable from 'immutable';
 
 export default class Form extends Component {
 
+	static contextTypes = {
+		form: React.PropTypes.object
+	};
+
 	constructor(props) {
 		super(props);
 		if (props.schema) {
@@ -89,10 +93,17 @@ export default class Form extends Component {
 		}
 	}
 
+	handleKeyDown(e) {
+		if (e.keyCode == 13 && e.target.tagName == 'INPUT' && this.props.onSubmit) {
+			e.preventDefault();
+			this.props.onSubmit(this.form)
+		}
+	}
+
 	render() {
-		if (this.props.nested) {
+		if (this.context.form) {
 			return (
-				<div className={this.props.className}>
+				<div className={this.props.className} onKeyDown={(e) => this.handleKeyDown(e)}>
 					{this.props.children}
 				</div>
 			)
