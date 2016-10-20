@@ -51,7 +51,11 @@ export default class Input extends Component {
 			style: this.props.style,
 			tabIndex: this.props.tabIndex,
 			title: this.props.title,
-			type: this.props.type
+			type: this.props.type,
+			onKeyPress: this.props.onKeyPress,
+			onKeyUp: this.props.onKeyUp,
+			onKeyDown: this.props.onKeyDown,
+			onFocus: this.props.onFocus
 		};
 
 		return (
