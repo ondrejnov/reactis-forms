@@ -28,6 +28,10 @@ export default class FormRow extends React.Component {
 			 this.props.required != nextProps.required ||
 			 this.props.label != nextProps.label ||
 			 this.props.labelWidth != nextProps.labelWidth;
+
+		if (this.props.visible instanceof Function) {
+			return true;
+		}
 		if (!shouldUpdate && this.lastControl) {
 			shouldUpdate = !shallowEqual(control.props, this.lastControl.props);
 		}
