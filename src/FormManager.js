@@ -126,12 +126,18 @@ export default class FormManager {
 		if (this.beforeChange) {
 			this.values = this.beforeChange(key, value, this.values);
 		}
+		if (this.schema[key].onChange) {
+			this.schema[key].onChange(value);
+		}
 		this.eventEmitter.emit('change', key, value, this.values);
 	}
 
 	handleBlur(key, value, touched = true) {
 		if (typeof value !== 'undefined') {
 			this.touched = this.touched.set(key, touched);
+			if (this.schema[key].onBlur) {
+				this.schema[key].onBlur(value);
+			}
 			this.eventEmitter.emit('blur', key, value, this.touched);
 		}
 	}
