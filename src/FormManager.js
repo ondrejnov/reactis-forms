@@ -118,7 +118,7 @@ export default class FormManager {
 		});
 	}
 
-	handleChange(key, value) {
+	handleChange(key, value, extra) {
 		if (!this.values) {
 			this.values = immutable.Map();
 		}
@@ -127,7 +127,7 @@ export default class FormManager {
 			this.values = this.beforeChange(key, value, this.values);
 		}
 		if (this.schema[key].onChange) {
-			this.schema[key].onChange(value);
+			this.schema[key].onChange(value, extra);
 		}
 		this.eventEmitter.emit('change', key, value, this.values);
 	}

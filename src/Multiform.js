@@ -29,7 +29,7 @@ export default class Multiform extends React.Component {
 		item = immutable.Map(item);
 		const value = this.props.value ? this.props.value.push(item) : immutable.List([item]);
 		if (this.props.onChange) {
-			this.props.onChange(value);
+			this.props.onChange(value, item);
 		}
 		if (this.props.onBlur) {
 			this.props.onBlur(value, this.props.touched);
@@ -42,7 +42,7 @@ export default class Multiform extends React.Component {
 			return it.get('id') != item.get('id');
 		});
 		if (this.props.onChange) {
-			this.props.onChange(value);
+			this.props.onChange(value, item);
 		}
 		if (this.props.onBlur) {
 			this.props.onBlur(value, this.props.touched);
@@ -58,8 +58,11 @@ export default class Multiform extends React.Component {
 				return it;
 			}
 		});
+		const changedItem = newValue.filter(it => {
+			return it.get('id') == item.get('id');
+		});
 		if (this.props.onChange) {
-			this.props.onChange(newValue);
+			this.props.onChange(newValue, changedItem.get(0));
 		}
 		if (this.props.onBlur) {
 			let touched = this.props.touched;
