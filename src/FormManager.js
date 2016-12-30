@@ -164,6 +164,10 @@ export default class FormManager {
 	getControlProps(def) {
 		let props = this.createProps(def);
 		props.value = this.values ? this.values.get(def.key) : null;
+		if (props.dynamicProps) {
+			const dynamicProps = props.dynamicProps(this.values ? this.values.toJS() : null);
+			props = {...props, ...dynamicProps};
+		}
 
 		const error = this.errors ? this.errors[def.key] : null;
 		if (this.touched.get(def.key)) {
