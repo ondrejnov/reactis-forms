@@ -12,7 +12,7 @@ export default class Form extends Component {
 	constructor(props) {
 		super(props);
 		if (props.schema) {
-			this.form = new FormManager(props.schema);
+			this.form = new FormManager(props.schema, this.props.parentProps);
 			this.form.beforeChange = props.beforeChange;
 		}
 		else {
@@ -43,6 +43,9 @@ export default class Form extends Component {
 	}
 
 	componentWillReceiveProps(nextProps) {
+		if (nextProps.parentProps && nextProps.parentProps != this.props.parentProps) {
+			this.form.parentProps = nextProps.parentProps;
+		}
 		if (nextProps.state) {
 			this.syncForm(nextProps.state);
 		}

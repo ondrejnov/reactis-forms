@@ -10,7 +10,7 @@ import {bindActionCreators} from 'redux';
 @connect(
 	(state, ownProps) => {
 		return {
-			state: state.forms.get(ownProps.id)
+			state: !ownProps.disableInitRedux ? state.forms.get(ownProps.id) : null
 		};
 	},
 	(dispatch) => {
@@ -18,8 +18,12 @@ import {bindActionCreators} from 'redux';
 	},null, { withRef: true })
 export default class ReduxForm extends Component {
 
-	handleInit(values, form) {
+	setValues(values) {
 		this.props.actions.setValue(this.props.id, values);
+	}
+
+	handleInit(values, form) {
+		this.setValues(values);
 	}
 
 	handleSubmit(form) {

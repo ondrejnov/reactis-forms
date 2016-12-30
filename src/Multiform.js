@@ -124,6 +124,7 @@ export default class Multiform extends React.Component {
 				return <Subform key={value.get('id')}
 								schema={this.props.schema}
 								class={this.props.subform}
+								parentProps={this.props}
 								state={subformState}
 								beforeChange={this.props.beforeChange}
 								onChange={this.handleChange.bind(this, value)}

@@ -6,9 +6,10 @@ import shallowEqual from 'react-pure-render/shallowEqual';
 
 export default class FormManager {
 
-	constructor(schema) {
+	constructor(schema, parentProps) {
 		this.normalizeSchema(schema);
 		this.schema = schema;
+		this.parentProps = parentProps;
 		this.values = immutable.Map();
 		this.async = immutable.Map();
 		this.errors = immutable.Map();
@@ -165,7 +166,7 @@ export default class FormManager {
 		let props = this.createProps(def);
 		props.value = this.values ? this.values.get(def.key) : null;
 		if (props.dynamicProps) {
-			const dynamicProps = props.dynamicProps(this.values ? this.values.toJS() : null);
+			const dynamicProps = props.dynamicProps(this.values ? this.values.toJS() : null, this.parentProps);
 			props = {...props, ...dynamicProps};
 		}
 
