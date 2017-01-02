@@ -27,7 +27,8 @@ export default class FormRow extends React.Component {
 			 this.props.visible != nextProps.visible ||
 			 this.props.required != nextProps.required ||
 			 this.props.label != nextProps.label ||
-			 this.props.labelWidth != nextProps.labelWidth;
+			 this.props.labelWidth != nextProps.labelWidth ||
+			 this.props.children != nextProps.children;
 
 		if (this.props.visible instanceof Function) {
 			return true;
