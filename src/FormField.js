@@ -6,7 +6,11 @@ export default class FormField extends React.Component {
 		form: React.PropTypes.object
 	};
 
+	getElement() {
+		return this.refs.control;
+	}
+
 	render() {
-		return this.context.form.getControl(this.props.name);
+		return React.cloneElement(this.context.form.getControl(this.props.name), {ref: 'control'});
 	}
 }

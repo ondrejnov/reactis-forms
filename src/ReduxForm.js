@@ -10,7 +10,7 @@ import {bindActionCreators} from 'redux';
 @connect(
 	(state, ownProps) => {
 		return {
-			state: !ownProps.disableInitRedux ? state.forms.get(ownProps.id) : null
+			state: !ownProps.disableInitRedux ? state.forms.get(ownProps.id) : undefined
 		};
 	},
 	(dispatch) => {

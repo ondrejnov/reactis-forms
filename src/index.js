@@ -9,6 +9,7 @@ export Subform from './Subform';
 export TextInput from './TextInput';
 export TextArea from './TextArea';
 export Select from './Select';
+export NativeSelect from './NativeSelect';
 export Checkbox from './Checkbox';
 
 import * as actions from './actions';

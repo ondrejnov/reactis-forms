@@ -33,17 +33,17 @@ export default class FormRow extends React.Component {
 		if (this.props.visible instanceof Function) {
 			return true;
 		}
-		if (!shouldUpdate && this.lastControl) {
+		if (!shouldUpdate) {
 			shouldUpdate = !shallowEqual(control.props, this.lastControl.props);
 		}
 
 		this.lastControl = control;
-		//const shouldUpdate = true;
 		return shouldUpdate;
 	}
 
 	render() {
 		const control = this.getControl();
+		this.lastControl = control;
 		const display = this.props.visible &&
 					  (this.props.visible === true || this.props.visible(this.context.form.getValues().toJS()))
 						? '' : 'none';

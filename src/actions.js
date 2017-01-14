@@ -72,6 +72,10 @@ export const LOAD = 'forms/LOAD';
 export const LOAD_SUCCESS = 'forms/LOAD_SUCCESS';
 export const LOAD_FAIL = 'forms/LOAD_FAIL';
 
+export const FETCH = 'forms/FETCH';
+export const FETCH_SUCCESS = 'forms/FETCH_SUCCESS';
+export const FETCH_FAIL = 'forms/FETCH_FAIL';
+
 export const SAVE = 'forms/SAVE';
 export const SAVE_SUCCESS = 'forms/SAVE_SUCCESS';
 export const SAVE_FAIL = 'forms/SAVE_FAIL';
@@ -92,6 +96,13 @@ export const ACTIVE = 'forms/ACTIVE';
 export const ACTIVE_SUCCESS = 'forms/ACTIVE_SUCCESS';
 export const ACTIVE_FAIL = 'forms/ACTIVE_FAIL';
 
+export function fetch(id, api, query) {
+	return {
+		types: [FETCH, FETCH_SUCCESS, FETCH_FAIL],
+		id,
+		promise: (client) => client.call(api, query)
+	};
+}
 
 export function load(id, api, query) {
 	return {

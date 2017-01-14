@@ -176,7 +176,7 @@ export default class FormManager {
 		}
 
 		const async = this.async.get(def.key);
-		if (async) {
+		if (async && !props.error) {
 			props.asyncValidatePending = async.get('pending');
 			if (!props.asyncValidatePending) {
 				props.error = async.get('error');
