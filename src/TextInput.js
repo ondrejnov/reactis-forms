@@ -37,6 +37,7 @@ export default class Input extends Component {
 
 		const props = {
 			autoFocus: this.props.autoFocus,
+			autoComplete: this.props.autoComplete,
 			className: this.props.className,
 			disabled: this.props.disabled,
 			maxLength: this.props.maxLength,
