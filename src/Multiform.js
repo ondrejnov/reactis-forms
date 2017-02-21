@@ -64,15 +64,32 @@ export default class Multiform extends React.Component {
 		if (this.props.onChange) {
 			this.props.onChange(newValue, changedItem.get(0));
 		}
+		if (0 && this.props.onBlur) {
+			let touched = this.props.touched;
+			if (this.props.touched !== true) {
+				if (!touched) {
+					touched = immutable.Map();
+				}
+				const exists = touched.get(item.get('id')) ? touched.get(item.get('id')) : {};
+				exists[key] = true;
+				touched = touched.set(item.get('id'), exists);
+			}
+			//this.props.onBlur(newValue, touched);
+		}
+	}
+
+	handleBlur(item, key, touchedx) {
 		if (this.props.onBlur) {
 			let touched = this.props.touched;
 			if (this.props.touched !== true) {
 				if (!touched) {
 					touched = immutable.Map();
 				}
-				touched = touched.set(item.get('id'), true);
+				const exists = touched.get(item.get('id')) ? touched.get(item.get('id')) : {};
+				exists[key] = true;
+				touched = touched.set(item.get('id'), exists);
 			}
-			this.props.onBlur(newValue, touched);
+			this.props.onBlur(this.props.value, touched);
 		}
 	}
 
@@ -102,7 +119,7 @@ export default class Multiform extends React.Component {
 				}
 
 				let touched = {};
-				if (suberrors) {
+				if (suberrors && this.props.touched === true) {
 					Object.keys(this.props.schema).forEach(key => {
 						touched[key] = true;
 					});
@@ -128,6 +145,7 @@ export default class Multiform extends React.Component {
 								state={subformState}
 								beforeChange={this.props.beforeChange}
 								onChange={this.handleChange.bind(this, value)}
+								onBlur={this.handleBlur.bind(this, value)}
 								onRemove={this.handleRemove.bind(this, value)}
 					/>;
 			});

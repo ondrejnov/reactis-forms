@@ -34,6 +34,7 @@ export default class FormManager {
 	}
 
 	reset() {
+		this.values = this.initValues;
 		this.eventEmitter.emit('blur', null, null, immutable.Map());
 		this.eventEmitter.emit('change', null, null, this.initValues);
 	}
